@@ -1,0 +1,70 @@
+package assignment1;
+
+import java.util.Arrays;
+
+
+public class inversion {
+	
+	
+	public static int[] mergeSort(int[] list){
+		int length = list.length;
+		return mergeSort(list, 0,length,length);
+	}
+	
+	public static int[] mergeSort(int[] list , int start, int end, int max){
+
+		if(max==start){
+			int[] maxLength = new int[1];
+			maxLength[0] = Integer.MAX_VALUE;
+			return maxLength;
+		} 
+		if(start==end) return Arrays.copyOfRange(list, start, end+1);
+
+		
+		int mid = (end - start)/2+start;
+		int[] listA = mergeSort(list, start, mid, max);
+		int[] listB = mergeSort(list, mid+1, end, max);
+		
+		int[] listC = new int[listA.length+listB.length];
+		int pA = 0;
+		int pB = 0;
+		int pC = 0;
+		
+		while(pA<listA.length&&pB<listB.length){
+		if(listA[pA]<listB[pB]){
+			listC[pC] = listA[pA];
+			pA++;
+			pC++;
+		}else{
+			listC[pC] = listB[pB];
+			pB++;
+			pC++;
+		}
+		}
+		
+		while(pC<listA.length+listB.length){
+		if(pA<listA.length)
+		{
+			listC[pC] = listA[pA];
+			pA++;
+			pC++;
+		}else{
+			listC[pC] = listB[pB];
+			pB++;
+			pC++;
+		}
+		}
+		
+		
+		return listC;
+	}
+
+	public static void main(String[] args){
+		int[] array = {4,3,8,9,2,5,1};
+		int[] result = mergeSort(array);
+	
+		for(int i =0; i < array.length; i++)
+			System.out.println(result[i]);
+	}
+
+}
